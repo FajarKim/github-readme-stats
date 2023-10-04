@@ -127,6 +127,7 @@ const renderStatsCard = (stats, options = {}) => {
     disable_animations = false,
     rank_icon = "default",
     show = [],
+    username,
   } = options;
 
   const lheight = parseInt(String(line_height), 10);
@@ -396,7 +397,7 @@ const renderStatsCard = (stats, options = {}) => {
         <circle class="rank-circle-rim" cx="-10" cy="8" r="40" />
         <circle class="rank-circle" cx="-10" cy="8" r="40" />
         <g class="rank-text">
-          ${rankIcon(rank_icon, rank?.level, rank?.percentile)}
+          ${rankIcon(rank_icon, rank?.level, rank?.percentile, username)}
         </g>
       </g>`;
 

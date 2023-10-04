@@ -450,6 +450,13 @@ describe("Test renderStatsCard", () => {
       queryByTestId(document.body, "percentile-rank-value").textContent.trim(),
     ).toBe(stats.rank.percentile.toFixed(1) + "%");
   });
+  
+  it("should render profile rank icon", () => {
+    document.body.innerHTML = renderStatsCard(stats, {
+      rank_icon: "profile",
+    });
+    expect(queryByTestId(document.body, "profile-rank-icon")).toBeDefined();
+  });
 
   it("should throw error if all stats and rank icon are hidden", () => {
     expect(() =>

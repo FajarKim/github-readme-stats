@@ -97,6 +97,7 @@ export default async (req, res) => {
         disable_animations: parseBoolean(disable_animations),
         rank_icon,
         show: parseArray(show),
+        username,
       }),
     );
   } catch (err) {
