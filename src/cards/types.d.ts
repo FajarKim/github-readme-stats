@@ -1,5 +1,5 @@
 type ThemeNames = keyof typeof import("../../themes/index.js");
-type RankIcon = "default" | "github" | "percentile";
+type RankIcon = "default" | "github" | "percentile" | "profile";
 
 export type CommonOptions = {
   title_color: string;
@@ -14,6 +14,7 @@ export type CommonOptions = {
 };
 
 export type StatCardOptions = CommonOptions & {
+  username: string;
   hide: string[];
   show_icons: boolean;
   hide_title: boolean;

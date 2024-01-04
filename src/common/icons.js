@@ -1,3 +1,5 @@
+import base64ImageFetcher from "node-base64-image";
+
 const icons = {
   star: `<path fill-rule="evenodd" d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25zm0 2.445L6.615 5.5a.75.75 0 01-.564.41l-3.097.45 2.24 2.184a.75.75 0 01.216.664l-.528 3.084 2.769-1.456a.75.75 0 01.698 0l2.77 1.456-.53-3.084a.75.75 0 01.216-.664l2.24-2.183-3.096-.45a.75.75 0 01-.564-.41L8 2.694v.001z"/>`,
   commits: `<path fill-rule="evenodd" d="M1.643 3.143L.427 1.927A.25.25 0 000 2.104V5.75c0 .138.112.25.25.25h3.646a.25.25 0 00.177-.427L2.715 4.215a6.5 6.5 0 11-1.18 4.458.75.75 0 10-1.493.154 8.001 8.001 0 101.6-5.684zM7.75 4a.75.75 0 01.75.75v2.992l2.028.812a.75.75 0 01-.557 1.392l-2.5-1A.75.75 0 017 8.25v-3.5A.75.75 0 017.75 4z"/>`,
@@ -15,6 +17,19 @@ const icons = {
 };
 
 /**
+ * Encode image to Base64 string
+ *
+ * @param {string} avatarUrl - The avatar url github.
+ * @returns {string} - The Base64 code.
+ */
+const base64Image = async (avatarUrl) => {
+  const picture = await base64ImageFetcher.encode(avatarUrl, {
+    string: true,
+  });
+  return picture;
+}
+
+/**
  * Get rank icon
  *
  * @param {string} rankIcon - The rank icon type.
@@ -22,7 +37,7 @@ const icons = {
  * @param {number} percentile - The rank percentile.
  * @returns {string} - The SVG code of the rank icon
  */
-const rankIcon = (rankIcon, rankLevel, percentile) => {
+const rankIcon = (rankIcon, rankLevel, percentile, username) => {
   switch (rankIcon) {
     case "github":
       return `
@@ -38,6 +53,20 @@ const rankIcon = (rankIcon, rankLevel, percentile) => {
         <text x="-5" y="12" alignment-baseline="central" dominant-baseline="central" text-anchor="middle" data-testid="percentile-rank-value" class="rank-percentile-text">
           ${percentile.toFixed(1)}%
         </text>
+      `;
+    case "profile":
+      const avatarUrl = `https://avatars.githubusercontent.com/${username}`;
+      const picture = base64Image(avatarUrl);
+      return `
+        <svg x="-38" y="-30" height="66" width="66" aria-hidden="true" viewBox="0 0 66 66" data-view-component="true" data-testid="github-rank-profile">
+          <defs>
+            <rect id="rect" x="0%" y="0%" width="100%" height="100%" rx="50"/>
+            <clipPath id="clip">
+              <use href="#rect"/>
+            </clipPath>
+          </defs>
+          <image href="data:image/jpeg;base64,${picture}" width="100%" height="100%" clip-path="url(#clip)"/>
+        </svg>
       `;
     case "default":
     default:

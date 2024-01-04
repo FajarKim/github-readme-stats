@@ -61,6 +61,7 @@
     "dotenv": "^16.3.1",
     "emoji-name-map": "^1.2.8",
     "github-username-regex": "^1.0.0",
+    "node-base64-image": "^2.0.6",
     "upgrade": "^1.1.0",
     "word-wrap": "^1.2.5"
   },

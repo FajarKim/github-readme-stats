@@ -95,6 +95,7 @@ export default async (req, res) => {
 
     return res.send(
       renderStatsCard(stats, {
+        username,
         hide: parseArray(hide),
         show_icons: parseBoolean(show_icons),
         hide_title: parseBoolean(hide_title),
